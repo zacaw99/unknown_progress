@@ -8,12 +8,11 @@ window.addEventListener('message', (event) => {
 
 let isProgressActive = false
 let currentPercent = 0;
-let progressID = null;
 let cbEvent = null;
 let evServer = null;
 
-const createProgressbar = (progressIdentifier, title, barColour, time, textColour, callbackEvent, eventServer) => {
-    progressID = progressIdentifier;
+const createProgressbar = (title, barColour, time, textColour, callbackEvent, eventServer) => {
+
     cbEvent = callbackEvent;
     evServer = eventServer;
 
@@ -27,6 +26,7 @@ const createProgressbar = (progressIdentifier, title, barColour, time, textColou
         const progressContainer = document.querySelector('.progress-container');
         progressContainer.style.visibility = "visible";
         progressContainer.insertAdjacentHTML("beforeEnd", progressSnippet);
+        
         isProgressActive = true;
         currentPercent = 0;
 
@@ -63,6 +63,8 @@ const updateProgress = (timeForPercent) => {
 }).then(resp => resp.json()).then(resp => {});
 
         isProgressActive = false;
+        cbEvent = null;
+        evServer = null;
     } else {
         currentPercent = currentPercent + 1;
         const progress = document.querySelector('.progress');

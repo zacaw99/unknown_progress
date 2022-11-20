@@ -6,10 +6,9 @@ on("onClientResourceStart", (resourceName) => {
     console.log("[UNKNOWN] Loaded Unknown_Progress");
   });
 
-  const createProgressbar = (progressIdentifier, title, barColour, textColour, time, cbEvent, eventServer) => {
+  const createProgressbar = (title, barColour, textColour, time, cbEvent, eventServer) => {
     SendNUIMessage({
       "action": "createProgressbar",
-      "pid": progressIdentifier,
       "title": title,
       "barColour": barColour,
       "textColour": textColour,
@@ -26,7 +25,7 @@ RegisterNuiCallbackType('progressComplete') // register the type
 // register a magic event name
 on('__cfx_nui:progressComplete', (data, cb) => {
     const eventData = data.eventData;
-    
+
     if(eventData.serverEvent == true) {
       emitNet("unknown_progress:" + eventData.callbackEvent)
       cb({});
